@@ -1,0 +1,15 @@
+table{
+    margin-top: 20px;
+    border: 1px solid;
+    border-color: black;
+    
+}
+thead{
+    background-color: grey;
+}
+tbody{
+    background-color: rgb(243, 242, 242);
+}
+td,th{
+    border: 1px solid;
+}
