@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class GameController extends Controller
 {
     static function index(){
-        $games = Game::all();
+        $games = Game::all()->get();
         return view('welcome',["games"=>$games]);
 
     }
@@ -21,12 +21,23 @@ class GameController extends Controller
     }
 
     static function store(Request $request){
+        $genres = [];
+        $genre_iterate = 1;
+        $gameArray = $request->all();
+
+        while(isset($gameArray["genre-$genre_iterate"])){
+
+            $genres["genre-$genre_iterate"] = $gameArray["genre-$genre_iterate"];
+            $genre_iterate += 1;
+        }
+
         $game = new Game([
-            "title"=>$request->title,
-            "developer_id"=>$request->developer_id,
-            "release_date"=>$request->release_date,
-            "genre"=>$request->genre,
-        ]);
+            "title" => $request->title,
+            "developer_id" => $request->developer_id,
+            "release_date" => $request->release_date,
+            "genre" => json_encode($genres)
+            ]
+        );
 
         $game->save();
         return redirect("/");
